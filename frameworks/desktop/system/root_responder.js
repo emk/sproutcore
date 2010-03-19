@@ -409,9 +409,20 @@ SC.RootResponder = SC.RootResponder.extend(
       this._IMEInputON = YES;
       return YES;
     }
-    
-    // Firefox does NOT handle delete here...
-    if (SC.browser.mozilla && (evt.which === 8)) return true ;
+        
+    // Firefox sends a few key events twice: the first time to the keydown event
+    // and then later again to the keypress event. To handle them correct, they
+    // should be processed only once. Due to this, we will skip these events
+    // here and handle them then in keypress.
+    if (SC.browser.mozilla) {
+      // Check for function keys (like DELETE, TAB, LEFT, RIGHT...)
+      if (SC.FUNCTION_KEYS[evt.keyCode]) {
+        return true;
+      // Check for command keys (like ctrl_c, ctrl_z...)
+      } else if ((evt.ctrlKey || evt.metaKey) && SC.PRINTABLE_KEYS[evt.keyCode]) {
+        return true;
+      }
+    }
     
     // modifier keys are handled separately by the 'flagsChanged' event
     // send event for modifier key changes, but only stop processing if this 
@@ -421,20 +432,16 @@ SC.RootResponder = SC.RootResponder.extend(
         forceBlock = (evt.which === 8) && !SC.allowsBackspaceToPreviousPage && (target === document.body);
     
     if (this._isModifierKey(evt)) return (forceBlock ? NO : ret);
-    
+
     // if this is a function or non-printable key, try to use this as a key
-    // equivalent.  Otherwise, send as a keyDown event so that the focused
+    // equivalent. Otherwise, send as a keyDown event so that the focused
     // responder can do something useful with the event.
     ret = YES ;
     if (this._isFunctionOrNonPrintableKey(evt)) {
       // otherwise, send as keyDown event.  If no one was interested in this
       // keyDown event (probably the case), just let the browser do its own
       // processing.
-      
-      // Arrow keys are handled in keypress for firefox
-      if (evt.keyCode>=37 && evt.keyCode<=40 && SC.browser.mozilla) return YES;
-     
-      
+
       ret = this.sendEvent('keyDown', evt) ;
       
       // attempt key equivalent if key not handled
@@ -459,22 +466,38 @@ SC.RootResponder = SC.RootResponder.extend(
   */
   keypress: function(evt) {
     var ret ;
-    
-    // delete is handled in keydown() for most browsers
-    if (SC.browser.mozilla && (evt.which === 8)) {
-      //get the keycode and set it for which.
-      evt.which=evt.keyCode;
-      ret = this.sendEvent('keyDown', evt);
-      return ret ? (SC.allowsBackspaceToPreviousPage || evt.hasCustomEventHandling) : YES ;
 
-    // normal processing.  send keyDown for printable keys... 
-    //there is a special case for arrow key repeating of events in FF.
-    } else {
-      var isFirefoxArrowKeys = (evt.keyCode>=37 && evt.keyCode<=40 && SC.browser.mozilla);
-      if ((evt.charCode !== undefined && evt.charCode === 0) && !isFirefoxArrowKeys) return YES;
-      if (isFirefoxArrowKeys) evt.which=evt.keyCode;
-      return this.sendEvent('keyDown', evt) ? evt.hasCustomEventHandling:YES;
+    // If we are running Firefox, we might have to handle a few events different
+    // as this is done in other browsers...
+    if (SC.browser.mozilla) {
+      // If this is a function key, we have to use the keyCode.
+      if (SC.FUNCTION_KEYS[evt.keyCode]) {
+        evt.which = evt.keyCode;
+        ret = this.sendEvent('keyDown', evt);
+
+        // In the case of the BACKSPACE key, we have to check if we are allowed
+        // to go back to the previous page or this should be suppressed.
+        if (evt.keyCode == 8) {
+          ret = ret ? (SC.allowsBackspaceToPreviousPage || evt.hasCustomEventHandling) : YES;
+        } else {
+          ret = ret ? evt.hasCustomEventHandling : YES;
+        }
+        return ret;
+
+        // Check for command keys (like ctrl_c, ctrl_z...).
+        // If this is true, we have to convert the current charCode to a keyCode
+        // as it has been send from the keydown event to be in line with the
+        // other browsers implementations.
+      } else if ((evt.ctrlKey || evt.metaKey) && SC.PRINTABLE_KEYS_CHARCODE[evt.charCode]){
+        evt.keyCode = SC.PRINTABLE_KEYS_CHARCODE[evt.charCode];
+        evt.charCode = 0;
+        return this.sendEvent('keyDown', evt) ? evt.hasCustomEventHandling : YES;
+      }
     }
+
+    // normal processing: send keyDown for printable keys.
+    if (evt.charCode !== undefined && evt.charCode === 0) return YES;
+    return this.sendEvent('keyDown', evt) ? evt.hasCustomEventHandling:YES;
   },
   
   keyup: function(evt) {
