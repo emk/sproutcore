@@ -88,7 +88,7 @@ test("Test action repeats while active", function(){
 
   var assertions = function(){
     // The actual number of times in not entirely predictable since there can be delays beyond the holdInterval
-    console.log('counter', counter.get('value'));
+    SC.Logger.log('counter', counter.get('value'));
     ok(counter.get('value') > 2, "should have run more than 2 times");
     b.set('isActive', NO); // Stops triggering
     start();

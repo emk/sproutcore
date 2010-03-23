@@ -184,7 +184,7 @@ SC.routes = SC.Object.create(
       method = routeHandler._method;
       if (method) method.call(target, params);
     }
-      //else console.log('could not find route for: "'+route+'"') ;
+      //else SC.Logger.log('could not find route for: "'+route+'"') ;
   },
   
   /** @private */
@@ -249,7 +249,7 @@ SC.routes = SC.Object.create(
         var delta = (historyDidChange) ? (history.length - this._backStack.length) : 0 ;
         this._lastLength = history.length ;
         
-        if (historyDidChange) console.log('historyDidChange') ;
+        if (historyDidChange) SC.Logger.log('historyDidChange') ;
         
         // if the history length has changed, then we need to move forward or 
         // back in the history.
@@ -328,7 +328,7 @@ SC.routes = SC.Object.create(
       },
       
       _setWindowLocation: function(loc) {
-        //console.log('_setWindowLocation('+loc+')') ;
+        //SC.Logger.log('_setWindowLocation('+loc+')') ;
         var cloc = location.hash ;
         cloc = (cloc && cloc.length > 0) ? cloc.slice(1,cloc.length) : '' ;
         if (cloc != loc) {
@@ -358,7 +358,7 @@ SC.routes = SC.Object.create(
       },
       
       _setWindowLocation: function(loc) {
-        //console.log('_setWindowLocation('+loc+')') ;
+        //SC.Logger.log('_setWindowLocation('+loc+')') ;
         var cloc = location.hash ;
         cloc = (cloc && cloc.length > 0) ? cloc.slice(1,cloc.length) : '' ;
         if (cloc != loc) {
@@ -392,7 +392,7 @@ SC.routes = SC.Object.create(
   
   /** @private */
   _setWindowLocation: function(loc) {
-    //console.log('_setWindowLocation('+loc+')') ;
+    //SC.Logger.log('_setWindowLocation('+loc+')') ;
     var cloc = location.hash ;
     cloc = (cloc && cloc.length > 0) ? cloc.slice(1,cloc.length) : '' ;
     if (cloc != loc) {

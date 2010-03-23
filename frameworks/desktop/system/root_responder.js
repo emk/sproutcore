@@ -589,7 +589,7 @@ SC.RootResponder = SC.RootResponder.extend(
       if (view && view.respondsTo('mouseDragged')) this._mouseCanDrag = YES ;
     } catch (e) {
     
-      console.warn('Exception during mousedown: %@'.fmt(e)) ;
+      SC.Logger.warn('Exception during mousedown: %@'.fmt(e)) ;
       this._mouseDownView = null ;
       this._mouseCanDrag = NO ;
       throw e;
