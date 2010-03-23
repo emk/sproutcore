@@ -70,6 +70,7 @@ SC.mapDisplayNames = function(obj, level, path, seenHash, seenArray) {
     if (key === "constructor") continue ;
     if (key === "superclass") continue ;
     if (key === "document") continue ;
+    if (key === "cookie") continue ;
 
     val = obj[key];
     if (key === "SproutCore") key = "SC";
