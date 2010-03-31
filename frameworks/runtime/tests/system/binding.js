@@ -6,8 +6,7 @@
 // ==========================================================================
 
 "import core_test:qunit";
-var SC = require('index'); // load sproutcore/foundation
-var system = require('system' ,'default');
+"import sproutcore/runtime:index";
 
 var fromObject, toObject, binding, Bon1, bon2 ; // global variables
 
@@ -252,13 +251,13 @@ test("two bindings to the same value should sync in the order they are initializ
 
   SC.RunLoop.begin();
 
-  system.global.a = SC.Object.create({ 
+  window.a = SC.Object.create({ 
     foo: "bar" 
   });
   
-  var a = system.global.a;
+  var a = window.a;
   
-  system.global.b = SC.Object.create({ 
+  window.b = SC.Object.create({ 
     foo: "baz",
     fooBinding: "a.foo",
     
@@ -274,7 +273,7 @@ test("two bindings to the same value should sync in the order they are initializ
     
   });
   
-  var b = system.global.b;
+  var b = window.b;
 
   SC.LOG_BINDINGS = true;
     
@@ -284,7 +283,7 @@ test("two bindings to the same value should sync in the order they are initializ
   equals(b.get('foo'), "bar", 'a.foo should propogate up to b.foo');
   equals(b.c.get('foo'), "bar", 'a.foo should propogate up to b.c.foo');
   
-  system.global.a = system.global.b = null ;
+  window.a = window.b = null ;
   
 });
 
@@ -386,4 +385,4 @@ test("toObject.value should be second value if first is falsy", function() {
   equals(toObject.get('value'), 'second value');
 });
 
-plan.run();
+run();

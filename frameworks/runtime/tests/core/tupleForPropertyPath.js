@@ -7,7 +7,6 @@
 
 "import core_test:qunit";
 var SC = require('index'); // load sproutcore/foundation
-var system = require('system', 'default');
 
 var object, object1,object3; //global variables
 
@@ -29,7 +28,7 @@ module("Checking the tuple for property path",{
 test("should check for the tuple property", function() {
      var object2 = [];
      object2 = SC.tupleForPropertyPath(object.name,'');
-     equals(object2[0], system.global, "the global object");
+     equals(object2[0], window, "the global object");
      equals(object2[1],'SproutCore',"the property name");	
      object2 = SC.tupleForPropertyPath(object.objectA.propertyVal,'object');
 	 equals(object2[0],'object',"the root");
