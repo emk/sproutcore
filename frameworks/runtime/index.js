@@ -12,6 +12,9 @@
 
 // export the basic namespace
 exports = module.exports = require('core');
+exports.sc_require = function() {}; 
+exports.sc_resource = function() {};
+
 
 // require all the other package exports.  These will add themselves to the
 // SC namespace
@@ -37,4 +40,4 @@ require('system/set');
 require('system/sparse_array');
 
 // consumed by tiki.globals() to avoid making all symbols global
-exports.__globals__ = ['SC', 'SproutCore', 'YES', 'NO'];
+exports.__globals__ = ['SC', 'SproutCore', 'YES', 'NO', 'sc_require', 'sc_resource'];
