@@ -17,7 +17,7 @@ SC.mixin({
     if (this._isReadyBound) return;
     this._isReadyBound = YES ;
     
-    tiki.require('tiki').ready.main(SC, SC._didBecomeReady);
+    tiki.addMainListener(SC, SC._didBecomeReady);
     
     // 
     // // Mozilla, Opera (see further below for it) and webkit nightlies 

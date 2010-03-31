@@ -28,7 +28,7 @@ SC.mixin(/** @scope SC */ {
     @returns {Boolean}
   */
   bundleIsLoaded: function(bundleName) {
-    return tiki.ready(bundleName);
+    return tiki.require.ready(bundleName);
   },
   
   /**
@@ -76,8 +76,11 @@ SC.mixin(/** @scope SC */ {
       handler = target = method = null; // cleanup memory
     };
     
-    tiki.async(bundleName).then(function() {
-      tiki.require('tiki').ready(this, handler);
+    var loader = this;
+    tiki.addReadyListener(function() {
+      tiki.require.ensure(bundleName, function() {
+        handler.call(loader);
+      });
     });
   }
   
