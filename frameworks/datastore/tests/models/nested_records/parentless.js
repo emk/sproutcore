@@ -4,6 +4,8 @@
  * @author Evin Grano
  */
 
+ "import core_test:qunit sproutcore/datastore";
+
 // ..........................................................
 // Basic Set up needs to move to the setup and teardown
 // 

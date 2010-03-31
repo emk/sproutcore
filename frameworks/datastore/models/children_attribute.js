@@ -4,9 +4,11 @@
 // License:   Licensed under MIT license (see license.js)
 // ==========================================================================
 
-sc_require('models/record');
-sc_require('models/record_attribute');
-sc_require('models/child_attribute');
+var SC = require('core');
+require('models/record');
+require('models/record_attribute');
+require('models/child_attribute');
+require('system/child_array');
 
 /** @class
   

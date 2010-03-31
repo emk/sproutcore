@@ -2,9 +2,9 @@
 // SC.ChildRecord
 // 
 
-sc_require('core');
-sc_require('models/record');
-sc_require('system/query'); // FIXME: [EG] some wonky build order crap here...
+var SC = require('core');
+require('models/record');
+require('system/query'); // FIXME: [EG] some wonky build order crap here...
 
 /**
  * An extension of SC.Record. We use this as the superclass for child record types 
@@ -23,7 +23,7 @@ SC.ChildRecord = SC.Record.extend(
   /**
    * This is a check to see if this is a ChildRecord
    */
-  isChildRecord: YES,
+  isChildRecord: true,
   
   /**
    * The type of the child record.

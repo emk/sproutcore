@@ -64,7 +64,7 @@ module("SC.RecordAttribute core methods", {
       }),
       
       // test readONly
-      readOnly: SC.Record.attr(String, { isEditable: NO })
+      readOnly: SC.Record.attr(String, { isEditable: false })
       
     });
     

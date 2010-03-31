@@ -4,8 +4,9 @@
 // License:   Licensed under MIT license (see license.js)
 // ==========================================================================
 
-sc_require('models/record');
-sc_require('models/record_attribute');
+var SC = require('core');
+require('models/record');
+require('models/record_attribute');
 
 /** @class
   
@@ -27,7 +28,7 @@ sc_require('models/record_attribute');
 SC.ChildAttribute = SC.RecordAttribute.extend(
   /** @scope SC.ChildAttribute.prototype */ {
     
-  isChildRecordTransform: YES,
+  isChildRecordTransform: true,
       
   // ..........................................................
   // LOW-LEVEL METHODS

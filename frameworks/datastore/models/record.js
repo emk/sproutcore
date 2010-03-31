@@ -1155,4 +1155,8 @@ require('models/record_attribute');
 require('models/single_attribute');
 require('models/many_attribute');
 require('models/fetched_attribute');
+require('models/children_attribute');
+require('models/child_attribute');
+require('models/child_record');
+
 
