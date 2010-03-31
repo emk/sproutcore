@@ -6,7 +6,7 @@
 // ==========================================================================
 
 var SC = require('core'),
-    Ct = require('core_test');
+    Ct = require('core_test:sync');
 require('debug/test_suites/array/base');
 
 SC.ArraySuite.define(function(T) {
@@ -18,7 +18,7 @@ SC.ArraySuite.define(function(T) {
         obj      = T.newObject(3), 
         len      = 3,
         idx;
-        
+
     for(idx=0;idx<len;idx++) {
       t.equal(obj.indexOf(expected[idx]), idx, 'obj.indexOf(%@) should match idx'.fmt(expected[idx]));
     }

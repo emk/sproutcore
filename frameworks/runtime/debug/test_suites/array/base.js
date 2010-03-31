@@ -6,7 +6,9 @@
 // ==========================================================================
 
 var SC = require('core'),
-    Ct = require('core_test');
+    Ct = require('core_test:sync');
+
+require('core_test:system/suite');
 
 /**
   Adds a new module of unit tests to verify that the passed object implements
@@ -225,6 +227,7 @@ SC.ArraySuite = Ct.Suite.create("Verify SC.Array compliance: %@#%@", {
 
 // Simple verfication of length
 SC.ArraySuite.define(function(T) {
+  
   T.module("length");
   
   Ct.test("should return 0 on empty array", function(t) {

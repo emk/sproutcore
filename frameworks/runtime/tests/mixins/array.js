@@ -5,8 +5,8 @@
 // License:   Licensed under MIT license (see license.js)
 // ==========================================================================
 
-"import core_test:qunit";
-var SC = require('index'); // load sproutcore/foundation
+var SC = require('index'), // load sproutcore/foundation
+    Ct = require('core_test:sync');
 require('debug/test_suites/array');
 
 // ..........................................................
@@ -57,4 +57,4 @@ SC.ArraySuite.generate("DummyArray", {
   }
 });
 
-run();
+Ct.run();
